@@ -1,0 +1,225 @@
+openapi: '3.0.2'
+info:
+  title: film-library
+  version: '1.0'
+servers:
+  - url: https://localhost:8080/
+
+security:
+  - cookieAuth: []
+
+paths:
+  /actors:
+    get:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getActorsResponse"
+        '401':
+          description: Unauthorized
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/id"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /actors/{id}:
+    get:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/actorId"
+      responses:
+        '200':
+          description: OK
+    put:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/actorId"
+      responses:
+        '200':
+          description: OK
+    delete:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/actorId"
+      responses:
+        '200':
+          description: OK
+  /films:
+    get:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/filmSort"
+        - $ref: "#/components/parameters/actorFilter"
+        - $ref: "#/components/parameters/filmFilter"
+      responses:
+        '200':
+          description: OK
+    post:
+      responses:
+        '200':
+          description: OK
+  /films/{id}:
+    get:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/filmId"
+      responses:
+        '200':
+          description: OK
+    put:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/filmId"
+      responses:
+        '200':
+          description: OK
+    delete:
+      description: ''
+      parameters:
+        - $ref: "#/components/parameters/filmId"
+      responses:
+        '200':
+          description: OK
+  /signup:
+    post:
+      description: ''
+      responses:
+        '200':
+          description: OK
+      security: []
+  /signin:
+    post:
+      description: ''
+      responses:
+        '200':
+          description: OK
+      security: []
+  
+
+components:
+  schemas:
+    getActorsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/actor"
+    getFilmsResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/film"
+    actor:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        info:
+          $ref: "#/components/schemas/actorInfo"
+        films:
+          type: array
+          items:
+            type: string
+    film:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        info:
+          $ref: "#/components/schemas/filmInfo"
+        actors:
+          type: array
+          items:
+            type: string
+    actorInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        sex:
+          type: string
+          enum: ["male", "female"]
+        birthday:
+          type: string
+          format: date
+    filmInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+        description:
+          type: string
+          maxLength: 1000
+        releasedate:
+          type: string
+          format: date
+        rating:
+          type: integer
+          minimum: 0
+          maximum: 10
+    userInfo:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+    id:
+      description: identificator
+      type: integer
+      format: int64
+  parameters:
+    actorId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: The actor id
+    filmId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: The actor id
+    filmSort:
+      name: sort
+      in: query
+      schema:
+        type: string
+        pattern: '^(name|rating|releasedate) (asc|desc)$'
+        example: name asc
+    actorFilter:
+      name: actor
+      in: query
+      schema:
+        type: string
+      description: filter by actors matching given keyword
+    filmFilter:
+      name: film
+      in: query
+      schema:
+        type: string
+      description: filter by films matching given keyword
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: jwt
+    
