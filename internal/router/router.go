@@ -21,6 +21,6 @@ func NewRouter(uh user.UserHandler) *Router {
 	}
 }
 
-func (r *Router) Run(addr string) {
-	http.ListenAndServe(addr, r.mux)
+func (r *Router) Run(addr string) error {
+	return http.ListenAndServe(addr, r.mux)
 }
