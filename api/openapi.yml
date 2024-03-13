@@ -11,7 +11,7 @@ security:
 paths:
   /actors:
     get:
-      summary: ''
+      summary: get actors list
       responses:
         '200':
           description: OK
@@ -22,42 +22,85 @@ paths:
         '401':
           description: Unauthorized
     post:
+      summary: add actor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/actorInfo"
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/id"
+                $ref: "#/components/schemas/actor"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
         '401':
           description: Unauthorized
         '403':
           description: Forbidden
   /actors/{id}:
     get:
-      description: ''
+      summary: get specific actor
       parameters:
         - $ref: "#/components/parameters/actorId"
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/actor"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
     put:
-      description: ''
+      summary: update info about specific actor
       parameters:
         - $ref: "#/components/parameters/actorId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/actorInfo"
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
     delete:
-      description: ''
+      summary: delete specific actor
       parameters:
         - $ref: "#/components/parameters/actorId"
       responses:
         '200':
           description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
   /films:
     get:
-      description: ''
+      summary: get films list
       parameters:
         - $ref: "#/components/parameters/filmSort"
         - $ref: "#/components/parameters/actorFilter"
@@ -65,38 +108,112 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getFilmsResponse"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        '401':
+          description: Unauthorized
     post:
+      summary: add film
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createFilmRequest"
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/film"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
   /films/{id}:
     get:
-      description: ''
+      summary: get specific film
       parameters:
         - $ref: "#/components/parameters/filmId"
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/film"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
     put:
-      description: ''
+      summary: update info about specific film
       parameters:
         - $ref: "#/components/parameters/filmId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/filmInfo"
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
     delete:
-      description: ''
+      summary: delte specific film
       parameters:
         - $ref: "#/components/parameters/filmId"
       responses:
         '200':
           description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
   /signup:
     post:
-      description: ''
+      summary: sign up
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userInfo"
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
       security: []
   /signin:
     post:
@@ -104,11 +221,25 @@ paths:
       responses:
         '200':
           description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
       security: []
   
 
 components:
   schemas:
+    errorMessage:
+      type: object
+      properties:
+        errorType:
+          type: string
+          enum: [Validation]
+        body:
+          type: string
     getActorsResponse:
       type: array
       items:
@@ -117,6 +248,15 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/film"
+    createFilmRequest:
+      type: object
+      properties:
+        info:
+          $ref: "#/components/schemas/filmInfo"
+        actors:
+          type: array
+          items:
+            $ref: "#/components/schemas/id"
     actor:
       type: object
       properties:
