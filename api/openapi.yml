@@ -217,7 +217,12 @@ paths:
       security: []
   /signin:
     post:
-      description: ''
+      summary: sign in
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userInfo"
       responses:
         '200':
           description: OK
