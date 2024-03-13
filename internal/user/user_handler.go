@@ -40,7 +40,7 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// TODO: add check for ErrUserExists
+		// TODO: add check for ErrUserExist
 
 		util.InternalServerError(w, r)
 		return

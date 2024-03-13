@@ -22,3 +22,19 @@ postgres-rm:
 .PHONY: postgres-cli
 postgres-cli:
 	@docker exec -it db-test psql -U admin
+
+.PHONY: compose-build
+compose-build:
+	@docker compose build
+
+.PHONY: compose-rm
+compose-rm:
+	@
+
+.PHONY: compose-up
+compose-up:
+	@docker compose up
+
+.PHONY: compose-down
+compose-down:
+	@docker compose down

@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"net/http"
 )
 
 type User struct {
@@ -19,6 +20,11 @@ type UserRepository interface {
 type UserService interface {
 	CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error)
 	Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error)
+}
+
+type UserHandler interface {
+	CreateUser(w http.ResponseWriter, r *http.Request)
+	Login(w http.ResponseWriter, r *http.Request)
 }
 
 type CreateUserRequest struct {
