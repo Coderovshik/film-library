@@ -42,12 +42,19 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// TODO: add check for ErrUserExist
+		if errors.Is(err, ErrUserExist) {
+			util.JSON(w, r, http.StatusBadRequest, &util.ErrorMessage{
+				ErrorType: util.ErrorTypeConflict,
+				Body:      "User already exists",
+			})
+			return
+		}
 
 		util.InternalServerError(w, r)
 		return
 	}
 
+	log.Printf("INFO: processed reqeust successfully path=%s from=%s\n", r.URL.Path, r.RemoteAddr)
 	util.JSON(w, r, http.StatusOK, res)
 }
 
@@ -65,12 +72,19 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("ERROR: failed to create user err=%s\n", err.Error())
 
-		// TODO: add check for ErrUserNotExist and Password comparison failure
+		if errors.Is(err, ErrUserNotExist) || errors.Is(err, ErrPasswordIncorrect) {
+			util.JSON(w, r, http.StatusUnauthorized, &util.ErrorMessage{
+				ErrorType: util.ErrorTypeValidation,
+				Body:      "incorrect password",
+			})
+			return
+		}
 
 		util.InternalServerError(w, r)
 		return
 	}
 
+	log.Printf("INFO: processed reqeust successfully path=%s from=%s\n", r.URL.Path, r.RemoteAddr)
 	util.SetJWTCookie(w, res.AccessToken)
 	util.OK(w, r)
 }

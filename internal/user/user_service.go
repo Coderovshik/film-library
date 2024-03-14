@@ -2,12 +2,17 @@ package user
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 
 	"github.com/Coderovshik/film-library/internal/config"
 	"github.com/Coderovshik/film-library/internal/util"
 	"golang.org/x/crypto/bcrypt"
+)
+
+var (
+	ErrPasswordIncorrect = errors.New("password is incorrect")
 )
 
 type Service struct {
@@ -66,6 +71,11 @@ func (s *Service) Login(ctx context.Context, req *LoginRequest) (*LoginResponse,
 
 	err = bcrypt.CompareHashAndPassword([]byte(u.Passhash), []byte(req.Password))
 	if err != nil {
+		if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
+			log.Printf("ERROR: mismathced password and hash\n")
+			return nil, fmt.Errorf("%s: %w", op, ErrPasswordIncorrect)
+		}
+
 		log.Printf("ERROR: failed password and hash comparison\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}

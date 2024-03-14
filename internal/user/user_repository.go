@@ -3,8 +3,16 @@ package user
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
+
+	"github.com/lib/pq"
+)
+
+var (
+	ErrUserExist    = errors.New("user already exists")
+	ErrUserNotExist = errors.New("user does not exist")
 )
 
 type DBTX interface {
@@ -37,7 +45,15 @@ func (r *Repository) CreateUser(ctx context.Context, user *User) (*User, error) 
 
 	err = stmt.QueryRowContext(ctx, user.Username, user.Passhash, user.IsAdmin).Scan(&user.ID)
 	if err != nil {
-		log.Printf("ERROR: failed execute query")
+		var pgErr *pq.Error
+		if errors.As(err, pgErr) {
+			if pgErr.Code.Name() == "unique_violation" {
+				log.Printf("ERROR: user %s already exists\n", user.Username)
+				return nil, fmt.Errorf("%s: %w", op, ErrUserExist)
+			}
+		}
+
+		log.Printf("ERROR: failed to execute query\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 
@@ -58,7 +74,12 @@ func (r *Repository) GetUserByUsername(ctx context.Context, username string) (*U
 	u := User{}
 	err = stmt.QueryRowContext(ctx, username).Scan(&u.ID, &u.Username, &u.Passhash, &u.IsAdmin)
 	if err != nil {
-		log.Printf("ERROR: failed execute query")
+		if errors.Is(err, sql.ErrNoRows) {
+			log.Printf("ERROR: user %s does not exist\n", username)
+			return nil, fmt.Errorf("%s: %w", op, ErrUserNotExist)
+		}
+
+		log.Printf("ERROR: failed to execute query\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 
