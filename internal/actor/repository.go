@@ -144,7 +144,7 @@ func (r *Repository) UpdateActor(ctx context.Context, a *Actor) error {
 		return fmt.Errorf("%s: %w", op, err)
 	}
 	if count == 0 {
-		log.Printf("ERROR: zero rows addected by deletion\n")
+		log.Printf("ERROR: zero rows affected by deletion\n")
 		return fmt.Errorf("%s: %w", op, ErrActorNotExist)
 	}
 

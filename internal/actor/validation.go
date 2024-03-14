@@ -33,6 +33,7 @@ func ValidateActorInfo(ai *ActorInfo) error {
 
 func ValidateDate(date string, ve *util.ValidationError) error {
 	if len(date) == 0 {
+		ve.AddViolation("date empty (expected format: 2006-01-02)")
 		return ErrDateEmpty
 	}
 

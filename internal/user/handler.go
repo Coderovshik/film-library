@@ -20,8 +20,6 @@ func NewHandler(s UserService) *Handler {
 }
 
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
-	log.Printf("INFO: incoming reqeust path=%s from=%s\n", r.URL.Path, r.RemoteAddr)
-
 	var req CreateUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
@@ -54,13 +52,10 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("INFO: processed reqeust successfully path=%s from=%s\n", r.URL.Path, r.RemoteAddr)
 	util.JSON(w, r, http.StatusOK, res)
 }
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
-	log.Printf("INFO: incoming reqeust path=%s from=%s\n", r.URL.Path, r.RemoteAddr)
-
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
@@ -84,7 +79,6 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("INFO: processed reqeust successfully path=%s from=%s\n", r.URL.Path, r.RemoteAddr)
 	util.SetJWTCookie(w, res.AccessToken)
 	util.OK(w, r)
 }

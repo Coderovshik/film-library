@@ -2,6 +2,7 @@ package actor
 
 import (
 	"context"
+	"net/http"
 	"time"
 )
 
@@ -27,6 +28,14 @@ type ActorService interface {
 	GetActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error)
 	UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*ActorResponse, error)
 	DeleteActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error)
+}
+
+type ActorHandler interface {
+	GetActors(w http.ResponseWriter, r *http.Request)
+	AddActor(w http.ResponseWriter, r *http.Request)
+	GetActor(w http.ResponseWriter, r *http.Request)
+	UpdateActor(w http.ResponseWriter, r *http.Request)
+	DeleteActor(w http.ResponseWriter, r *http.Request)
 }
 
 type ActorInfo struct {

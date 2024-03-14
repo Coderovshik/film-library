@@ -8,13 +8,10 @@ import (
 	"strconv"
 
 	"github.com/Coderovshik/film-library/internal/util"
-	"github.com/golang-jwt/jwt/v5"
 )
 
 var (
-	ErrPermissionDenied = errors.New("no necessary permissions")
-	ErrTokenInvalid     = errors.New("invalid api token")
-	ErrIdInvalid        = errors.New("invalid id")
+	ErrIdInvalid = errors.New("invalid id")
 )
 
 var _ ActorService = (*Service)(nil)
@@ -24,27 +21,15 @@ type Service struct {
 	signingKey string
 }
 
+func NewService(ar ActorRepository, sk string) *Service {
+	return &Service{
+		repo:       ar,
+		signingKey: sk,
+	}
+}
+
 func (s *Service) GetActors(ctx context.Context) ([]*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
-
-	token := ctx.Value(util.JWTContextKey("jwt")).(string)
-	uc, err := util.ParseUserClaims(token, s.signingKey)
-	if err != nil {
-		log.Printf("ERROR: bad token\n")
-
-		if errors.Is(err, jwt.ErrTokenSignatureInvalid) {
-			log.Printf("ERROR: jwt signature is invalid\n")
-		}
-		if errors.Is(err, util.ErrUnknownClaimsType) {
-			log.Printf("ERROR: unknown token claims\n")
-		}
-
-		return nil, fmt.Errorf("%s: %w", op, ErrTokenInvalid)
-	}
-
-	if !uc.IsAdmin {
-		return nil, fmt.Errorf("%s: %w", op, ErrPermissionDenied)
-	}
 
 	actors, err := s.repo.GetActors(ctx)
 	if err != nil {
@@ -63,26 +48,7 @@ func (s *Service) GetActors(ctx context.Context) ([]*ActorResponse, error) {
 func (s *Service) AddActor(ctx context.Context, req *ActorInfo) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
 
-	token := ctx.Value(util.JWTContextKey("jwt")).(string)
-	uc, err := util.ParseUserClaims(token, s.signingKey)
-	if err != nil {
-		log.Printf("ERROR: bad token\n")
-
-		if errors.Is(err, jwt.ErrTokenSignatureInvalid) {
-			log.Printf("ERROR: jwt signature is invalid\n")
-		}
-		if errors.Is(err, util.ErrUnknownClaimsType) {
-			log.Printf("ERROR: unknown token claims\n")
-		}
-
-		return nil, fmt.Errorf("%s: %w", op, ErrTokenInvalid)
-	}
-
-	if !uc.IsAdmin {
-		return nil, fmt.Errorf("%s: %w", op, ErrPermissionDenied)
-	}
-
-	err = ValidateActorInfo(req)
+	err := ValidateActorInfo(req)
 	if err != nil {
 		log.Printf("ERROR: failed request validation\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
@@ -103,25 +69,6 @@ func (s *Service) AddActor(ctx context.Context, req *ActorInfo) (*ActorResponse,
 func (s *Service) GetActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
 
-	token := ctx.Value(util.JWTContextKey("jwt")).(string)
-	uc, err := util.ParseUserClaims(token, s.signingKey)
-	if err != nil {
-		log.Printf("ERROR: bad token\n")
-
-		if errors.Is(err, jwt.ErrTokenSignatureInvalid) {
-			log.Printf("ERROR: jwt signature is invalid\n")
-		}
-		if errors.Is(err, util.ErrUnknownClaimsType) {
-			log.Printf("ERROR: unknown token claims\n")
-		}
-
-		return nil, fmt.Errorf("%s: %w", op, ErrTokenInvalid)
-	}
-
-	if !uc.IsAdmin {
-		return nil, fmt.Errorf("%s: %w", op, ErrPermissionDenied)
-	}
-
 	id, err := strconv.ParseInt(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
@@ -141,25 +88,6 @@ func (s *Service) GetActor(ctx context.Context, req *ActorIdRequest) (*ActorResp
 
 func (s *Service) UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
-
-	token := ctx.Value(util.JWTContextKey("jwt")).(string)
-	uc, err := util.ParseUserClaims(token, s.signingKey)
-	if err != nil {
-		log.Printf("ERROR: bad token\n")
-
-		if errors.Is(err, jwt.ErrTokenSignatureInvalid) {
-			log.Printf("ERROR: jwt signature is invalid\n")
-		}
-		if errors.Is(err, util.ErrUnknownClaimsType) {
-			log.Printf("ERROR: unknown token claims\n")
-		}
-
-		return nil, fmt.Errorf("%s: %w", op, ErrTokenInvalid)
-	}
-
-	if !uc.IsAdmin {
-		return nil, fmt.Errorf("%s: %w", op, ErrPermissionDenied)
-	}
 
 	id, err := strconv.ParseInt(req.ID, 10, 32)
 	if err != nil {
@@ -195,25 +123,6 @@ func (s *Service) UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*Ac
 
 func (s *Service) DeleteActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
-
-	token := ctx.Value(util.JWTContextKey("jwt")).(string)
-	uc, err := util.ParseUserClaims(token, s.signingKey)
-	if err != nil {
-		log.Printf("ERROR: bad token\n")
-
-		if errors.Is(err, jwt.ErrTokenSignatureInvalid) {
-			log.Printf("ERROR: jwt signature is invalid\n")
-		}
-		if errors.Is(err, util.ErrUnknownClaimsType) {
-			log.Printf("ERROR: unknown token claims\n")
-		}
-
-		return nil, fmt.Errorf("%s: %w", op, ErrTokenInvalid)
-	}
-
-	if !uc.IsAdmin {
-		return nil, fmt.Errorf("%s: %w", op, ErrPermissionDenied)
-	}
 
 	id, err := strconv.ParseInt(req.ID, 10, 32)
 	if err != nil {
