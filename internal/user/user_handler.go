@@ -70,7 +70,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 	res, err := h.service.Login(r.Context(), &req)
 	if err != nil {
-		log.Printf("ERROR: failed to create user err=%s\n", err.Error())
+		log.Printf("ERROR: failed to login user err=%s\n", err.Error())
 
 		if errors.Is(err, ErrUserNotExist) || errors.Is(err, ErrPasswordIncorrect) {
 			util.JSON(w, r, http.StatusUnauthorized, &util.ErrorMessage{

@@ -46,7 +46,7 @@ func (r *Repository) CreateUser(ctx context.Context, user *User) (*User, error) 
 	err = stmt.QueryRowContext(ctx, user.Username, user.Passhash, user.IsAdmin).Scan(&user.ID)
 	if err != nil {
 		var pgErr *pq.Error
-		if errors.As(err, pgErr) {
+		if errors.As(err, &pgErr) {
 			if pgErr.Code.Name() == "unique_violation" {
 				log.Printf("ERROR: user %s already exists\n", user.Username)
 				return nil, fmt.Errorf("%s: %w", op, ErrUserExist)
