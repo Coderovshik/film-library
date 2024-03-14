@@ -23,8 +23,12 @@ postgres-rm:
 postgres-cli:
 	@docker exec -it db-test psql -U admin
 
+.PHONY: app-image-rm
+app-image-rm:
+	@docker image rm app:1.0
+
 .PHONY: compose-build
-compose-build:
+compose-build: app-image-rm
 	@docker compose build
 
 .PHONY: compose-rm
