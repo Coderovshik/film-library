@@ -13,8 +13,13 @@ type Router struct {
 func NewRouter(uh user.UserHandler) *Router {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("POST /signup/", uh.CreateUser)
-	mux.HandleFunc("POST /signin/", uh.Login)
+	mux.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("pong"))
+	})
+
+	mux.HandleFunc("POST /signup", uh.CreateUser)
+	mux.HandleFunc("POST /signin", uh.Login)
 
 	return &Router{
 		mux: mux,

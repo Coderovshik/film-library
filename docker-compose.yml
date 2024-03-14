@@ -9,8 +9,6 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-    networks:
-      - mynetwork
     ports:
       - 5433:5432
 
@@ -25,11 +23,6 @@ services:
       - ./config/.env
     ports:
       - 8080:8080
-    networks:
-      - mynetwork
     
 volumes:
   pgdata:
-
-networks:
-  mynetwork:

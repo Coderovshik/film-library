@@ -78,6 +78,6 @@ func (s *Service) Login(ctx context.Context, req *LoginRequest) (*LoginResponse,
 	}
 
 	return &LoginResponse{
-		accessToken: ss,
+		AccessToken: ss,
 	}, nil
 }

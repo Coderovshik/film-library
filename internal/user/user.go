@@ -43,5 +43,5 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	accessToken string
+	AccessToken string
 }
