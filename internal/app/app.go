@@ -3,6 +3,7 @@ package app
 import (
 	"log"
 
+	"github.com/Coderovshik/film-library/internal/actor"
 	"github.com/Coderovshik/film-library/internal/config"
 	"github.com/Coderovshik/film-library/internal/db"
 	"github.com/Coderovshik/film-library/internal/router"
@@ -24,7 +25,11 @@ func NewApp(cfg *config.Config) *App {
 	userService := user.NewService(userRepo, cfg)
 	userHandler := user.NewHandler(userService)
 
-	router := router.NewRouter(userHandler)
+	actorRepo := actor.NewRepository(database.GetDB())
+	actorService := actor.NewService(actorRepo, cfg)
+	actorHandler := actor.NewHandler(actorService)
+
+	router := router.NewRouter(cfg, userHandler, actorHandler)
 
 	return &App{
 		Router: router,

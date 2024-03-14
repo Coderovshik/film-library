@@ -7,6 +7,7 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/Coderovshik/film-library/internal/config"
 	"github.com/Coderovshik/film-library/internal/util"
 )
 
@@ -21,10 +22,10 @@ type Service struct {
 	signingKey string
 }
 
-func NewService(ar ActorRepository, sk string) *Service {
+func NewService(ar ActorRepository, cfg *config.Config) *Service {
 	return &Service{
 		repo:       ar,
-		signingKey: sk,
+		signingKey: cfg.SigningKey,
 	}
 }
 
