@@ -47,7 +47,7 @@ func (r *Repository) GetActor(ctx context.Context, id int32) (*Actor, error) {
 	defer stmt.Close()
 
 	var a Actor
-	var filmString string
+	var filmString sql.NullString
 	err = stmt.QueryRowContext(ctx, id).Scan(&a.ID, &a.Name, &a.Sex, &a.Birthday, &filmString)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -58,7 +58,7 @@ func (r *Repository) GetActor(ctx context.Context, id int32) (*Actor, error) {
 		log.Printf("ERROR: failed to execute query\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
-	a.Films = strings.Split(filmString, ";")
+	a.Films = strings.Split(filmString.String, ";")
 
 	return &a, nil
 }
@@ -125,6 +125,7 @@ func (r *Repository) UpdateActor(ctx context.Context, a *Actor) error {
 	}
 
 	query := `UPDATE actor SET ` + qo.Args(2) + ` WHERE actor_id = $1`
+	log.Printf("GENERATED QUERY: %s\n", query)
 	stmt, err := r.db.PrepareContext(ctx, query)
 	if err != nil {
 		log.Printf("ERROR: failed to prepare query\n")
@@ -132,7 +133,9 @@ func (r *Repository) UpdateActor(ctx context.Context, a *Actor) error {
 	}
 	defer stmt.Close()
 
-	res, err := stmt.ExecContext(ctx, a.ID)
+	values := qo.Values()
+	values = append([]any{a.ID}, values...)
+	res, err := stmt.ExecContext(ctx, values...)
 	if err != nil {
 		log.Printf("ERROR: failed to execute query\n")
 		return fmt.Errorf("%s: %w", op, err)
@@ -144,7 +147,7 @@ func (r *Repository) UpdateActor(ctx context.Context, a *Actor) error {
 		return fmt.Errorf("%s: %w", op, err)
 	}
 	if count == 0 {
-		log.Printf("ERROR: zero rows affected by deletion\n")
+		log.Printf("ERROR: zero rows affected by update\n")
 		return fmt.Errorf("%s: %w", op, ErrActorNotExist)
 	}
 
@@ -178,13 +181,13 @@ func (r *Repository) GetActors(ctx context.Context) ([]*Actor, error) {
 
 	for rows.Next() {
 		var a Actor
-		var filmString string
+		var filmString sql.NullString
 		err := rows.Scan(&a.ID, &a.Name, &a.Sex, &a.Birthday, &filmString)
 		if err != nil {
 			log.Printf("ERROR: failed to execute query\n")
 			return nil, fmt.Errorf("%s: %w", op, err)
 		}
-		a.Films = strings.Split(filmString, ";")
+		a.Films = strings.Split(filmString.String, ";")
 
 		actors = append(actors, &a)
 	}

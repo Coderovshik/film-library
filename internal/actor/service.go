@@ -103,7 +103,7 @@ func (s *Service) UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*Ac
 			return nil, fmt.Errorf("%s: %w", op, err)
 		}
 	}
-	actor := ToActor(req.Info)
+	actor := ToActor(&req.Info)
 
 	err = s.repo.UpdateActor(ctx, actor)
 	if err != nil {

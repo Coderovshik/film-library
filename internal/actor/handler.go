@@ -82,7 +82,7 @@ func (h *Handler) UpdateActor(w http.ResponseWriter, r *http.Request) {
 	req := ActorIdInfoRequest{
 		ID: r.PathValue("id"),
 	}
-	if err := json.NewDecoder(r.Body).Decode(req.Info); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req.Info); err != nil {
 		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
 		util.InternalServerError(w, r)
 		return

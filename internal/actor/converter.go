@@ -27,7 +27,7 @@ func ToQueryableObject(a *Actor) *util.QueryableObject {
 func ToActorResponse(a *Actor) *ActorResponse {
 	return &ActorResponse{
 		ID: int(a.ID),
-		Info: &ActorInfo{
+		Info: ActorInfo{
 			Name:     a.Name,
 			Sex:      a.Sex,
 			Birthday: a.Birthday.Format("2006-01-02"),
