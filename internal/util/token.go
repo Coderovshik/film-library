@@ -25,6 +25,7 @@ func NewUserClaims(id int, username string, isAdmin bool) *UserClaims {
 	return &UserClaims{
 		ID:       id,
 		Username: username,
+		IsAdmin:  isAdmin,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    "chat_app",
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

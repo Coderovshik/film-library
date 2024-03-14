@@ -35,8 +35,8 @@ func (r *Repository) GetActor(ctx context.Context, id int32) (*Actor, error) {
 		SELECT a.actor_id, a.actor_name, a.sex, a.birthday,
 			STRING_AGG (m.movie_name, ';') movie_list
 		FROM actor a 
-		INNER JOIN actor_in_movie am USING (actor_id)
-		INNER JOIN movie m USING (movie_id)
+		LEFT JOIN actor_in_movie am USING (actor_id)
+		LEFT JOIN movie m USING (movie_id)
 		WHERE a.actor_id = $1
 		GROUP BY a.actor_id`
 	stmt, err := r.db.PrepareContext(ctx, query)
@@ -158,8 +158,8 @@ func (r *Repository) GetActors(ctx context.Context) ([]*Actor, error) {
 		SELECT a.actor_id, a.actor_name, a.sex, a.birthday,
     		STRING_AGG (m.movie_name, ';') movie_list
 		FROM actor a
-		INNER JOIN actor_in_movie am USING (actor_id)
-		INNER JOIN movie m USING (movie_id)
+		LEFT JOIN actor_in_movie am USING (actor_id)
+		LEFT JOIN movie m USING (movie_id)
 		GROUP BY a.actor_id`
 	stmt, err := r.db.PrepareContext(ctx, query)
 	if err != nil {

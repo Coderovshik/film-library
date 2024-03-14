@@ -63,6 +63,9 @@ paths:
           description: Not Found
     put:
       summary: update info about specific actor
+      description: |
+        populate ONLY those fields of request schema that need to be updated,
+        empty ones will be IGNORED
       parameters:
         - $ref: "#/components/parameters/actorId"
       requestBody:
