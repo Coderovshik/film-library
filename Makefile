@@ -28,7 +28,7 @@ app-image-rm:
 	@docker image rm app:1.0
 
 .PHONY: compose-build
-compose-build: app-image-rm
+compose-build:
 	@docker compose build
 
 .PHONY: compose-rm
