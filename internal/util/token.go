@@ -12,6 +12,8 @@ var (
 	ErrUnknownClaimsType = errors.New("unknown claims type, cannot proceed")
 )
 
+type JWTContextKey string
+
 type UserClaims struct {
 	ID       int    `json:"id"`
 	Username string `json:"username"`

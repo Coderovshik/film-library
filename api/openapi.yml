@@ -73,6 +73,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/actor"
         '400':
           description: Bad Request
           content:
@@ -92,6 +96,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/actor"
         '401':
           description: Unauthorized
         '403':
@@ -172,6 +180,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/film"
         '400':
           description: Bad Request
           content:
@@ -191,6 +203,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/film"
         '401':
           description: Unauthorized
         '403':
