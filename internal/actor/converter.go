@@ -41,7 +41,7 @@ func ToActor(ai *ActorInfo) *Actor {
 
 	return &Actor{
 		Name:     ai.Name,
-		Sex:      ai.Name,
+		Sex:      ai.Sex,
 		Birthday: birthday,
 	}
 }

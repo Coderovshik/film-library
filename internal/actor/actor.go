@@ -47,7 +47,7 @@ type ActorInfo struct {
 type ActorResponse struct {
 	ID    int       `json:"id"`
 	Info  ActorInfo `json:"info"`
-	Films []string  `json:"films"`
+	Films []string  `json:"films,omitempty"`
 }
 
 type ActorIdRequest struct {

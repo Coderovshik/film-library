@@ -8,6 +8,7 @@ import (
 type QueryableObject struct {
 	keys   []string
 	values []any
+	count  int
 }
 
 func NewQueryableObject() *QueryableObject {
@@ -37,4 +38,8 @@ func (qo *QueryableObject) Args(start int) string {
 
 func (qo *QueryableObject) Values() []any {
 	return qo.values
+}
+
+func (qo *QueryableObject) Len() int {
+	return len(qo.keys)
 }

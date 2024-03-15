@@ -1,28 +1,27 @@
 package actor
 
 import (
-	"errors"
 	"time"
 
 	"github.com/Coderovshik/film-library/internal/util"
 )
 
-var (
-	ErrDateEmpty = errors.New("date is empty")
-)
+var sexMap = map[string]struct{}{
+	"":       struct{}{},
+	"female": struct{}{},
+	"male":   struct{}{},
+}
 
-func ValidateActorInfo(ai *ActorInfo) error {
+func ValidateFormatActorInfo(ai *ActorInfo) *util.ValidationError {
 	ve := &util.ValidationError{}
 
-	if len(ai.Name) == 0 {
-		ve.AddViolation("name of length 0")
+	if _, ok := sexMap[ai.Sex]; !ok {
+		ve.AddViolation("incorrect sex format (expected one of [male, female])")
 	}
 
-	if len(ai.Sex) == 0 {
-		ve.AddViolation("sex of length 0")
+	if _, err := time.Parse("2006-01-02", ai.Birthday); err != nil && len(ai.Birthday) != 0 {
+		ve.AddViolation("incorrect date format (expected format: 2006-01-02)")
 	}
-
-	ValidateDate(ai.Birthday, ve)
 
 	if ve.NoViolations() {
 		return nil
@@ -31,17 +30,24 @@ func ValidateActorInfo(ai *ActorInfo) error {
 	return ve
 }
 
-func ValidateDate(date string, ve *util.ValidationError) error {
-	if len(date) == 0 {
+func ValidateEmptyActorInfo(ai *ActorInfo) *util.ValidationError {
+	ve := &util.ValidationError{}
+
+	if len(ai.Name) == 0 {
+		ve.AddViolation("name empty")
+	}
+
+	if len(ai.Sex) == 0 {
+		ve.AddViolation("sex empty (expected one of [male, female])")
+	}
+
+	if len(ai.Birthday) == 0 {
 		ve.AddViolation("date empty (expected format: 2006-01-02)")
-		return ErrDateEmpty
 	}
 
-	_, err := time.Parse("2006-01-02", date)
-	if err != nil {
-		ve.AddViolation("incorrect date format (expected format: 2006-01-02)")
-		return ve
+	if ve.NoViolations() {
+		return nil
 	}
 
-	return nil
+	return ve
 }

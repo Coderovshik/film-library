@@ -8,7 +8,6 @@ import (
 	"strconv"
 
 	"github.com/Coderovshik/film-library/internal/config"
-	"github.com/Coderovshik/film-library/internal/util"
 )
 
 var (
@@ -18,14 +17,12 @@ var (
 var _ ActorService = (*Service)(nil)
 
 type Service struct {
-	repo       ActorRepository
-	signingKey string
+	repo ActorRepository
 }
 
 func NewService(ar ActorRepository, cfg *config.Config) *Service {
 	return &Service{
-		repo:       ar,
-		signingKey: cfg.SigningKey,
+		repo: ar,
 	}
 }
 
@@ -49,14 +46,19 @@ func (s *Service) GetActors(ctx context.Context) ([]*ActorResponse, error) {
 func (s *Service) AddActor(ctx context.Context, req *ActorInfo) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
 
-	err := ValidateActorInfo(req)
-	if err != nil {
-		log.Printf("ERROR: failed request validation\n")
-		return nil, fmt.Errorf("%s: %w", op, err)
+	vErr := ValidateEmptyActorInfo(req)
+	if vErr != nil {
+		log.Printf("ERROR: failed request empty validation\n")
+		return nil, fmt.Errorf("%s: %w", op, vErr)
+	}
+	vErr = ValidateFormatActorInfo(req)
+	if vErr != nil {
+		log.Printf("ERROR: failed request format validation\n")
+		return nil, fmt.Errorf("%s: %w", op, vErr)
 	}
 	actor := ToActor(req)
 
-	actor, err = s.repo.AddActor(ctx, actor)
+	actor, err := s.repo.AddActor(ctx, actor)
 	if err != nil {
 		log.Printf("ERROR: failed to create actor record in repository")
 		return nil, fmt.Errorf("%s: %w", op, err)
@@ -68,7 +70,7 @@ func (s *Service) AddActor(ctx context.Context, req *ActorInfo) (*ActorResponse,
 }
 
 func (s *Service) GetActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error) {
-	const op = "actor.Service.GetActors"
+	const op = "actor.Service.GetActor"
 
 	id, err := strconv.ParseInt(req.ID, 10, 32)
 	if err != nil {
@@ -96,14 +98,14 @@ func (s *Service) UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*Ac
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
 	}
 
-	err = ValidateDate(req.Info.Birthday, &util.ValidationError{})
-	if err != nil {
-		if !errors.Is(err, ErrDateEmpty) {
-			log.Printf("ERROR: failed request validation\n")
-			return nil, fmt.Errorf("%s: %w", op, err)
-		}
+	vErr := ValidateFormatActorInfo(&req.Info)
+	if vErr != nil {
+		log.Printf("ERROR: failed request format validation\n")
+		return nil, fmt.Errorf("%s: %w", op, vErr)
 	}
+
 	actor := ToActor(&req.Info)
+	actor.ID = int32(id)
 
 	err = s.repo.UpdateActor(ctx, actor)
 	if err != nil {

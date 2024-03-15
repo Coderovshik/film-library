@@ -58,7 +58,9 @@ func (r *Repository) GetActor(ctx context.Context, id int32) (*Actor, error) {
 		log.Printf("ERROR: failed to execute query\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
-	a.Films = strings.Split(filmString.String, ";")
+	if len(filmString.String) != 0 {
+		a.Films = strings.Split(filmString.String, ";")
+	}
 
 	return &a, nil
 }
@@ -124,8 +126,8 @@ func (r *Repository) UpdateActor(ctx context.Context, a *Actor) error {
 		return fmt.Errorf("%s: %w", op, ErrEmptyUpdate)
 	}
 
-	query := `UPDATE actor SET ` + qo.Args(2) + ` WHERE actor_id = $1`
-	log.Printf("GENERATED QUERY: %s\n", query)
+	query := `UPDATE actor SET ` + qo.Args(1) +
+		` WHERE actor_id = ` + fmt.Sprintf("$%d", qo.Len()+1)
 	stmt, err := r.db.PrepareContext(ctx, query)
 	if err != nil {
 		log.Printf("ERROR: failed to prepare query\n")
@@ -134,7 +136,7 @@ func (r *Repository) UpdateActor(ctx context.Context, a *Actor) error {
 	defer stmt.Close()
 
 	values := qo.Values()
-	values = append([]any{a.ID}, values...)
+	values = append(values, a.ID)
 	res, err := stmt.ExecContext(ctx, values...)
 	if err != nil {
 		log.Printf("ERROR: failed to execute query\n")
@@ -187,7 +189,9 @@ func (r *Repository) GetActors(ctx context.Context) ([]*Actor, error) {
 			log.Printf("ERROR: failed to execute query\n")
 			return nil, fmt.Errorf("%s: %w", op, err)
 		}
-		a.Films = strings.Split(filmString.String, ";")
+		if len(filmString.String) != 0 {
+			a.Films = strings.Split(filmString.String, ";")
+		}
 
 		actors = append(actors, &a)
 	}

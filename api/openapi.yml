@@ -216,6 +216,82 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
+  /films/{id}/actors:
+    get:
+      summary: get ids of actors related to film
+      parameters:
+        - $ref: "#/components/parameters/filmId"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/actorsShortForm"
+        '404':
+          description: Not Found
+        '401':
+          description: Unauthorized
+    put:
+      summary: add actors to film
+      parameters:
+        - $ref: "#/components/parameters/filmId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/actorsShortForm"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      summary: remove actors from film
+      parameters:
+        - $ref: "#/components/parameters/filmId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/actorsShortForm"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
   /signup:
     post:
       summary: sign up
@@ -291,12 +367,15 @@ components:
       properties:
         info:
           $ref: "#/components/schemas/filmInfo"
-        actors:
+        actorIds:
           type: array
           items:
             $ref: "#/components/schemas/id"
     actor:
       type: object
+      required:
+        - id
+        - info
       properties:
         id:
           type: integer
@@ -359,6 +438,15 @@ components:
       description: identificator
       type: integer
       format: int32
+    actorsShortForm:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: "#/components/schemas/id"
+          name:
+            type: string
   parameters:
     actorId:
       name: id
@@ -375,26 +463,31 @@ components:
       schema:
         type: integer
         format: int32
-      description: The actor id
+      description: The film id
     filmSort:
       name: sort
       in: query
+      required: false
+      explode: true
       schema:
         type: string
-        pattern: '^(name|rating|releasedate) (asc|desc)$'
-        example: name asc
+        pattern: '^(name|rating|releasedate),(asc|desc)$'
+        default: rating,desc
+        example: name,asc
     actorFilter:
       name: actor
       in: query
+      required: false
       schema:
         type: string
-      description: filter by actors matching given keyword
+      description: filter by actors matching given keyword (empty query ignored)
     filmFilter:
       name: film
       in: query
+      required: false
       schema:
         type: string
-      description: filter by films matching given keyword
+      description: filter by films matching given keyword (empty query ignored)
   securitySchemes:
     cookieAuth:
       type: apiKey

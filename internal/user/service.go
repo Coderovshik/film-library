@@ -30,10 +30,10 @@ func NewService(repo UserRepository, cfg *config.Config) *Service {
 func (s *Service) CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error) {
 	const op = "user.Service.CreateUser"
 
-	err := ValidateCreateUserReuqest(req)
-	if err != nil {
+	vErr := ValidateCreateUserReuqest(req)
+	if vErr != nil {
 		log.Printf("ERROR: failed request validation")
-		return nil, fmt.Errorf("%s: %w", op, err)
+		return nil, fmt.Errorf("%s: %w", op, vErr)
 	}
 
 	passhash, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)

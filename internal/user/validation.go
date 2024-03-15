@@ -2,7 +2,7 @@ package user
 
 import "github.com/Coderovshik/film-library/internal/util"
 
-func ValidateCreateUserReuqest(req *CreateUserRequest) error {
+func ValidateCreateUserReuqest(req *CreateUserRequest) *util.ValidationError {
 	ve := &util.ValidationError{}
 
 	if len(req.Username) == 0 {
