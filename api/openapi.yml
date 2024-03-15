@@ -173,6 +173,9 @@ paths:
           description: Not Found
     put:
       summary: update info about specific film
+      description: |
+        empty fields ignored EXCEPT 'rating' IF you want 'rating' to remain unchanged 
+        put negative value otherwise it will be interpreted as 0
       parameters:
         - $ref: "#/components/parameters/filmId"
       requestBody:

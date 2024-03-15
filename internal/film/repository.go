@@ -25,6 +25,12 @@ type Repository struct {
 	db db.DBTX
 }
 
+func NewRepository(db db.DBTX) *Repository {
+	return &Repository{
+		db: db,
+	}
+}
+
 func (r *Repository) GetFilm(ctx context.Context, id int32) (*Film, error) {
 	const op = "film.Repository.GetFilm"
 
@@ -199,7 +205,7 @@ func (r *Repository) UpdateFilm(ctx context.Context, f *Film) error {
 func (r *Repository) GetFilms(ctx context.Context, q *Query) ([]*Film, error) {
 	const op = "film.Repository.GetFilms"
 
-	cons := ToQueryCoditions(q)
+	cons := ToQueryConditions(q)
 	query := `
 		SELECT m.movie_id, m.movie_name, m.movie_description, m.releasedate,
 			m.rating, STRING_AGG (a.actor_name, ';') movie_list
@@ -260,7 +266,7 @@ func (r *Repository) GetFilmActors(ctx context.Context, id int32) ([]*ActorShort
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.QueryContext(ctx)
+	rows, err := stmt.QueryContext(ctx, id)
 	if err != nil {
 		log.Printf("ERROR: failed to execute query\n")
 		return nil, fmt.Errorf("%s: %w", op, err)

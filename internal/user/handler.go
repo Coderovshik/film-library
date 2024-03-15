@@ -1,7 +1,6 @@
 package user
 
 import (
-	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
@@ -21,11 +20,7 @@ func NewHandler(s UserService) *Handler {
 
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var req CreateUserRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
-		util.InternalServerError(w, r)
-		return
-	}
+	util.BindJSON(w, r, &req)
 
 	res, err := h.service.CreateUser(r.Context(), &req)
 	if err != nil {
@@ -57,11 +52,7 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
-		util.InternalServerError(w, r)
-		return
-	}
+	util.BindJSON(w, r, &req)
 
 	res, err := h.service.Login(r.Context(), &req)
 	if err != nil {

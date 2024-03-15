@@ -39,7 +39,7 @@ func ToQueryableObject(a *Film) *util.QueryableObject {
 		qo.Add("releasedate", a.ReleaseDate)
 	}
 
-	if a.Rating < 0 {
+	if a.Rating >= 0 {
 		qo.Add("rating", a.Rating)
 	}
 
@@ -52,7 +52,7 @@ var sortMap = map[string]string{
 	"releasedate": "releasedate",
 }
 
-func ToQueryCoditions(q *Query) [3]string {
+func ToQueryConditions(q *Query) [3]string {
 	var conditions [3]string
 
 	var filmCon string
@@ -82,8 +82,13 @@ func ToQueryCoditions(q *Query) [3]string {
 }
 
 func ToQuery(req *GetFilmsRequest) *Query {
+	var sort []string
+	if len(req.SortQuery) != 0 {
+		sort = strings.Split(req.SortQuery, ",")
+	}
+
 	return &Query{
-		Sort:  strings.Split(req.SortQuery, ","),
+		Sort:  sort,
 		Film:  req.FilmQuery,
 		Actor: req.ActorQuery,
 	}

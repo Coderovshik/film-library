@@ -1,7 +1,6 @@
 package actor
 
 import (
-	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
@@ -32,11 +31,7 @@ func (h *Handler) GetActors(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) AddActor(w http.ResponseWriter, r *http.Request) {
 	var req ActorInfo
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
-		util.InternalServerError(w, r)
-		return
-	}
+	util.BindJSON(w, r, &req)
 
 	res, err := h.service.AddActor(r.Context(), &req)
 	if err != nil {
@@ -82,11 +77,7 @@ func (h *Handler) UpdateActor(w http.ResponseWriter, r *http.Request) {
 	req := ActorIdInfoRequest{
 		ID: r.PathValue("id"),
 	}
-	if err := json.NewDecoder(r.Body).Decode(&req.Info); err != nil {
-		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
-		util.InternalServerError(w, r)
-		return
-	}
+	util.BindJSON(w, r, &req.Info)
 
 	res, err := h.service.UpdateActor(r.Context(), &req)
 	if err != nil {
@@ -102,6 +93,14 @@ func (h *Handler) UpdateActor(w http.ResponseWriter, r *http.Request) {
 			util.JSON(w, r, http.StatusBadRequest, &util.ErrorMessage{
 				ErrorType: util.ErrorTypeValidation,
 				Body:      ve.Error(),
+			})
+			return
+		}
+
+		if errors.Is(err, ErrEmptyUpdate) {
+			util.JSON(w, r, http.StatusBadRequest, &util.ErrorMessage{
+				ErrorType: util.ErrorTypeValidation,
+				Body:      "empty update",
 			})
 			return
 		}
