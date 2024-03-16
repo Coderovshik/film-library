@@ -1,16 +1,30 @@
 openapi: '3.0.2'
 info:
-  title: film-library
+  title: Film library
   version: '1.0'
-servers:
-  - url: https://localhost:8080/
+  description: |
+    This is a simple Film library api. It allows reading and modifying of information about actors and films.
 
+    Useful links:
+    - [The Film library repository](https://github.com/Coderovshik/film-library)
+    - [The source API definition for the Film library](https://github.com/Coderovshik/film-library/blob/master/api/openapi.yml)
+servers:
+  - url: https://localhost:8080
 security:
   - cookieAuth: []
+tags:
+  - name: actors
+    description: Everything about actors
+  - name: films
+    description: Everything about films
+  - name: users
+    description: Authentication
 
 paths:
   /actors:
     get:
+      tags:
+        - actors
       summary: get actors list
       responses:
         '200':
@@ -22,6 +36,8 @@ paths:
         '401':
           description: Unauthorized
     post:
+      tags:
+        - actors
       summary: add actor
       requestBody:
         content:
@@ -47,6 +63,8 @@ paths:
           description: Forbidden
   /actors/{id}:
     get:
+      tags:
+        - actors
       summary: get specific actor
       parameters:
         - $ref: "#/components/parameters/actorId"
@@ -62,6 +80,8 @@ paths:
         '404':
           description: Not Found
     put:
+      tags:
+        - actors
       summary: update info about specific actor
       description: |
         populate ONLY those fields of request schema that need to be updated,
@@ -93,6 +113,8 @@ paths:
         '404':
           description: Not Found
     delete:
+      tags:
+        - actors
       summary: delete specific actor
       parameters:
         - $ref: "#/components/parameters/actorId"
@@ -111,7 +133,11 @@ paths:
           description: Not Found
   /films:
     get:
+      tags:
+        - films
       summary: get films list
+      description: |
+        search films by specifying sort and filte query parameters
       parameters:
         - $ref: "#/components/parameters/filmSort"
         - $ref: "#/components/parameters/actorFilter"
@@ -132,6 +158,8 @@ paths:
         '401':
           description: Unauthorized
     post:
+      tags:
+        - films
       summary: add film
       requestBody:
         content:
@@ -157,6 +185,8 @@ paths:
           description: Forbidden
   /films/{id}:
     get:
+      tags:
+        - films
       summary: get specific film
       parameters:
         - $ref: "#/components/parameters/filmId"
@@ -172,6 +202,8 @@ paths:
         '404':
           description: Not Found
     put:
+      tags:
+        - films
       summary: update info about specific film
       description: |
         empty fields ignored EXCEPT 'rating' IF you want 'rating' to remain unchanged 
@@ -203,6 +235,8 @@ paths:
         '404':
           description: Not Found
     delete:
+      tags:
+        - films
       summary: delte specific film
       parameters:
         - $ref: "#/components/parameters/filmId"
@@ -221,6 +255,8 @@ paths:
           description: Not Found
   /films/{id}/actors:
     get:
+      tags:
+        - films
       summary: get ids of actors related to film
       parameters:
         - $ref: "#/components/parameters/filmId"
@@ -236,6 +272,8 @@ paths:
         '401':
           description: Unauthorized
     put:
+      tags:
+        - films
       summary: add actors to film
       parameters:
         - $ref: "#/components/parameters/filmId"
@@ -266,6 +304,8 @@ paths:
         '404':
           description: Not Found
     delete:
+      tags:
+        - films
       summary: remove actors from film
       parameters:
         - $ref: "#/components/parameters/filmId"
@@ -297,6 +337,8 @@ paths:
           description: Not Found
   /signup:
     post:
+      tags:
+        - users
       summary: sign up
       requestBody:
         content:
@@ -324,6 +366,8 @@ paths:
       security: []
   /signin:
     post:
+      tags:
+        - users
       summary: sign in
       requestBody:
         content:
