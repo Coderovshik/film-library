@@ -115,7 +115,11 @@ func (r *Repository) AddFilmActors(ctx context.Context, fa *FilmActors) error {
 
 		if errors.As(err, &pgErr) {
 			if pgErr.Code.Name() == "foreign_key_violation" {
-				log.Printf("ERROR: one of the film-actor pairs already exists\n")
+				if strings.Contains(pgErr.Detail, "movie_id") {
+					log.Printf("ERROR: film does not exist\n")
+					return fmt.Errorf("%s: %w", op, ErrFilmNotExist)
+				}
+				log.Printf("ERROR: one of the actors does not exist\n")
 				return fmt.Errorf("%s: %w", op, ErrActorNotExist)
 			}
 		}
@@ -129,10 +133,7 @@ func (r *Repository) AddFilmActors(ctx context.Context, fa *FilmActors) error {
 		log.Printf("ERROR: failed to retrieve amount of rows affected by query\n")
 		return fmt.Errorf("%s: %w", op, err)
 	}
-	if count == 0 {
-		log.Printf("ERROR: 0 rows inserted\n")
-		return fmt.Errorf("%s: %w", op, ErrZeroActors)
-	}
+	log.Printf("INFO: %d rows inserted\n", count)
 
 	return nil
 }

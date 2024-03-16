@@ -61,6 +61,13 @@ func (s *Service) AddFilm(ctx context.Context, req *AddFilmRequest) (*FilmRespon
 		log.Printf("ERROR: failed request format validation\n")
 		return nil, fmt.Errorf("%s: %w", op, vErr)
 	}
+
+	vErr = &util.ValidationError{}
+	if req.ActorIDs == nil || len(req.ActorIDs) == 0 {
+		log.Printf("ERROR: empty actors field\n")
+		vErr.AddViolation("film with zero actors")
+		return nil, fmt.Errorf("%s: %w", op, vErr)
+	}
 	film := ToFilm(&req.Info)
 
 	film, err := s.repo.AddFilm(ctx, film)

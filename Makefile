@@ -12,6 +12,10 @@ compose-rm:
 compose-up:
 	@docker compose up
 
+.PHONY: compose-build-up
+compose-build-up:
+	@docker compose up --build
+
 .PHONY: compose-down
 compose-down:
 	@docker compose down

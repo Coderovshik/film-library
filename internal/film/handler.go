@@ -200,7 +200,7 @@ func (h *Handler) AddFilmActors(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("ERROR: failed to add film related actors err=%s\n", err.Error())
 
-		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrZeroActors) {
+		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrFilmNotExist) {
 			util.NotFound(w, r)
 			return
 		}
