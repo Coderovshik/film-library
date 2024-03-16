@@ -7,9 +7,9 @@ import (
 )
 
 var sexMap = map[string]struct{}{
-	"":       struct{}{},
-	"female": struct{}{},
-	"male":   struct{}{},
+	"":       {},
+	"female": {},
+	"male":   {},
 }
 
 func ValidateFormatActorInfo(ai *ActorInfo) *util.ValidationError {
@@ -19,7 +19,7 @@ func ValidateFormatActorInfo(ai *ActorInfo) *util.ValidationError {
 		ve.AddViolation("incorrect sex format (expected one of [male, female])")
 	}
 
-	if _, err := time.Parse("2006-01-02", ai.Birthday); err != nil && len(ai.Birthday) != 0 {
+	if _, err := time.Parse(time.DateOnly, ai.Birthday); err != nil && len(ai.Birthday) != 0 {
 		ve.AddViolation("incorrect date format (expected format: 2006-01-02)")
 	}
 

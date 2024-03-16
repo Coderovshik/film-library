@@ -27,7 +27,7 @@ func NewApp(cfg *config.Config) *App {
 	userHandler := user.NewHandler(userService)
 
 	actorRepo := actor.NewRepository(database.GetDB())
-	actorService := actor.NewService(actorRepo, cfg)
+	actorService := actor.NewService(actorRepo)
 	actorHandler := actor.NewHandler(actorService)
 
 	filmRepo := film.NewRepository(database.GetDB())

@@ -10,6 +10,11 @@ COPY . .
 RUN go build -o ./bin/app cmd/filmlib/main.go
 RUN go build -o ./bin/migrator cmd/migrator/main.go
 
+FROM builder AS tester
+
+RUN go test -v ./...
+RUN go test -cover ./...
+
 FROM alpine AS runner
 
 COPY --from=builder /usr/local/src/bin/app /

@@ -101,7 +101,7 @@ func (s *Service) AddFilm(ctx context.Context, req *AddFilmRequest) (*FilmRespon
 func (s *Service) GetFilm(ctx context.Context, req *FilmIdRequest) (*FilmResponse, error) {
 	const op = "film.Service.GetFilm"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
@@ -121,7 +121,7 @@ func (s *Service) GetFilm(ctx context.Context, req *FilmIdRequest) (*FilmRespons
 func (s *Service) UpdateFilm(ctx context.Context, req *FilmIdInfoRequest) (*FilmResponse, error) {
 	const op = "film.Service.UpdateFilm"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
@@ -156,7 +156,7 @@ func (s *Service) UpdateFilm(ctx context.Context, req *FilmIdInfoRequest) (*Film
 func (s *Service) DeleteFilm(ctx context.Context, req *FilmIdRequest) (*FilmResponse, error) {
 	const op = "film.Service.DeleteFilm"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
@@ -182,7 +182,7 @@ func (s *Service) DeleteFilm(ctx context.Context, req *FilmIdRequest) (*FilmResp
 func (s *Service) GetFilmActors(ctx context.Context, req *FilmIdRequest) ([]*ActorShortResponse, error) {
 	const op = "film.Service.GetFilmActors"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
@@ -206,7 +206,7 @@ func (s *Service) GetFilmActors(ctx context.Context, req *FilmIdRequest) ([]*Act
 func (s *Service) AddFilmActors(ctx context.Context, req *FilmActorsRequest) ([]*ActorShortResponse, error) {
 	const op = "film.Service.AddFilmActors"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
@@ -241,7 +241,7 @@ func (s *Service) AddFilmActors(ctx context.Context, req *FilmActorsRequest) ([]
 func (s *Service) DeleteFilmActors(ctx context.Context, req *FilmActorsRequest) ([]*ActorShortResponse, error) {
 	const op = "film.Service.AddFilmActors"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)

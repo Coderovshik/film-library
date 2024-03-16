@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"github.com/Coderovshik/film-library/internal/config"
 )
 
 var (
@@ -20,7 +18,7 @@ type Service struct {
 	repo ActorRepository
 }
 
-func NewService(ar ActorRepository, cfg *config.Config) *Service {
+func NewService(ar ActorRepository) *Service {
 	return &Service{
 		repo: ar,
 	}
@@ -72,7 +70,7 @@ func (s *Service) AddActor(ctx context.Context, req *ActorInfo) (*ActorResponse,
 func (s *Service) GetActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error) {
 	const op = "actor.Service.GetActor"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
@@ -92,9 +90,9 @@ func (s *Service) GetActor(ctx context.Context, req *ActorIdRequest) (*ActorResp
 func (s *Service) UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
-		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
+		log.Printf("ERROR: failed id parameter conversion\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
 	}
 
@@ -127,7 +125,7 @@ func (s *Service) UpdateActor(ctx context.Context, req *ActorIdInfoRequest) (*Ac
 func (s *Service) DeleteActor(ctx context.Context, req *ActorIdRequest) (*ActorResponse, error) {
 	const op = "actor.Service.GetActors"
 
-	id, err := strconv.ParseInt(req.ID, 10, 32)
+	id, err := strconv.ParseUint(req.ID, 10, 32)
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)

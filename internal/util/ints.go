@@ -1,5 +1,13 @@
 package util
 
+import (
+	"errors"
+)
+
+var (
+	ErrIdNonPositive = errors.New("id is not postive")
+)
+
 func RemoveDuplicateInt(intSlice []int) []int {
 	allKeys := make(map[int]bool)
 	list := []int{}

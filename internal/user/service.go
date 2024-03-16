@@ -63,6 +63,12 @@ func (s *Service) CreateUser(ctx context.Context, req *CreateUserRequest) (*Crea
 func (s *Service) Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error) {
 	const op = "user.Service.Login"
 
+	vErr := ValidateLoginReuqest(req)
+	if vErr != nil {
+		log.Printf("ERROR: failed request validation")
+		return nil, fmt.Errorf("%s: %w", op, vErr)
+	}
+
 	u, err := s.repo.GetUserByUsername(ctx, req.Username)
 	if err != nil {
 		log.Printf("ERROR: failed to get user record from repository\n")

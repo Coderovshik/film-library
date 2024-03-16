@@ -30,14 +30,14 @@ func ToActorResponse(a *Actor) *ActorResponse {
 		Info: ActorInfo{
 			Name:     a.Name,
 			Sex:      a.Sex,
-			Birthday: a.Birthday.Format("2006-01-02"),
+			Birthday: a.Birthday.Format(time.DateOnly),
 		},
 		Films: a.Films,
 	}
 }
 
 func ToActor(ai *ActorInfo) *Actor {
-	birthday, _ := time.Parse("2006-01-02", ai.Birthday)
+	birthday, _ := time.Parse(time.DateOnly, ai.Birthday)
 
 	return &Actor{
 		Name:     ai.Name,
