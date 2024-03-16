@@ -17,6 +17,7 @@ var (
 	ErrEmptyUpdate    = errors.New("no updates to apply")
 	ErrFilmActorExist = errors.New("given film and actor are already bound")
 	ErrActorNotExist  = errors.New("actor with given id does not exist")
+	ErrZeroActors     = errors.New("no actors affected")
 )
 
 var _ FilmRepository = (*Repository)(nil)
@@ -128,7 +129,10 @@ func (r *Repository) AddFilmActors(ctx context.Context, fa *FilmActors) error {
 		log.Printf("ERROR: failed to retrieve amount of rows affected by query\n")
 		return fmt.Errorf("%s: %w", op, err)
 	}
-	log.Printf("INFO: %d rows inserted\n", count)
+	if count == 0 {
+		log.Printf("ERROR: 0 rows inserted\n")
+		return fmt.Errorf("%s: %w", op, ErrZeroActors)
+	}
 
 	return nil
 }
@@ -316,7 +320,7 @@ func (r *Repository) DeleteFilmActors(ctx context.Context, fa *FilmActors) error
 	}
 	if count == 0 {
 		log.Printf("ERROR: zero rows affected by update\n")
-		return fmt.Errorf("%s: %w", op, ErrFilmNotExist)
+		return fmt.Errorf("%s: %w", op, ErrZeroActors)
 	}
 
 	return nil

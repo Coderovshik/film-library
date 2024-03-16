@@ -1,4 +1,0 @@
-#!/bin/ash
-
-/migrator
-/app

@@ -15,8 +15,6 @@ FROM alpine AS runner
 COPY --from=builder /usr/local/src/bin/app /
 COPY --from=builder /usr/local/src/bin/migrator /
 
-COPY scripts/startup.sh /
-
 EXPOSE 8080
 
-CMD ["/startup.sh"]
+CMD ["ash", "-c", "/migrator;/app"]

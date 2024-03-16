@@ -186,6 +186,10 @@ func (s *Service) GetFilmActors(ctx context.Context, req *FilmIdRequest) ([]*Act
 		log.Printf("ERROR: failed to get film actors from repository\n")
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
+	if len(actors) == 0 {
+		log.Printf("ERROR: no actors found")
+		return nil, fmt.Errorf("%s: %w", op, ErrZeroActors)
+	}
 
 	res := ToActorsShortRespose(actors)
 
@@ -199,6 +203,11 @@ func (s *Service) AddFilmActors(ctx context.Context, req *FilmActorsRequest) ([]
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
+	}
+
+	if req.ActorIDs == nil || len(req.ActorIDs) == 0 {
+		log.Printf("ERROR: empty update\n")
+		return nil, fmt.Errorf("%s: %w", op, ErrEmptyUpdate)
 	}
 
 	fa := &FilmActors{
@@ -229,6 +238,11 @@ func (s *Service) DeleteFilmActors(ctx context.Context, req *FilmActorsRequest) 
 	if err != nil {
 		log.Printf("ERROR: failed id parameter conversion (string -> int32)\n")
 		return nil, fmt.Errorf("%s: %w", op, ErrIdInvalid)
+	}
+
+	if req.ActorIDs == nil || len(req.ActorIDs) == 0 {
+		log.Printf("ERROR: empty update\n")
+		return nil, fmt.Errorf("%s: %w", op, ErrEmptyUpdate)
 	}
 
 	fa := &FilmActors{

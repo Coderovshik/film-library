@@ -14,11 +14,6 @@ func (ve *ValidationError) AddViolation(v string) {
 	ve.violations = append(ve.violations, v)
 }
 
-func (ve *ValidationError) Append(other *ValidationError) *ValidationError {
-	ve.violations = append(ve.violations, other.violations...)
-	return ve
-}
-
 func (ve *ValidationError) Error() string {
 	return strings.Join(ve.violations[:], "; ")
 }

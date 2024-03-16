@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"log"
 	"net/http"
 )
@@ -48,18 +49,36 @@ func JSON(w http.ResponseWriter, r *http.Request, statusCode int, obj any) {
 	w.Write(jsonBytes)
 }
 
-func BindJSON(w http.ResponseWriter, r *http.Request, object any) {
+func BindJSON(w http.ResponseWriter, r *http.Request, object any) bool {
 	if err := json.NewDecoder(r.Body).Decode(object); err != nil {
 		log.Printf("ERROR: failed to decode request body err=%s\n", err.Error())
+
+		var sErr *json.SyntaxError
+		if errors.As(err, &sErr) {
+			BadRequest(w, r)
+			w.Header().Set("content-type", "text/plain")
+			w.Write([]byte("invalid json"))
+			return false
+		}
+
+		if errors.Is(err, io.EOF) {
+			BadRequest(w, r)
+			w.Header().Set("content-type", "text/plain")
+			w.Write([]byte("empty request"))
+			return false
+		}
 
 		var utErr *json.UnmarshalTypeError
 		if errors.As(err, &utErr) {
 			BadRequest(w, r)
 			w.Header().Set("content-type", "text/plain")
 			w.Write([]byte("incorrect request typing"))
+			return false
 		}
 
 		InternalServerError(w, r)
-		return
+		return false
 	}
+
+	return true
 }

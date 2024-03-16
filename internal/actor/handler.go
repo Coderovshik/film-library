@@ -31,7 +31,9 @@ func (h *Handler) GetActors(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) AddActor(w http.ResponseWriter, r *http.Request) {
 	var req ActorInfo
-	util.BindJSON(w, r, &req)
+	if ok := util.BindJSON(w, r, &req); !ok {
+		return
+	}
 
 	res, err := h.service.AddActor(r.Context(), &req)
 	if err != nil {
@@ -77,7 +79,9 @@ func (h *Handler) UpdateActor(w http.ResponseWriter, r *http.Request) {
 	req := ActorIdInfoRequest{
 		ID: r.PathValue("id"),
 	}
-	util.BindJSON(w, r, &req.Info)
+	if ok := util.BindJSON(w, r, &req.Info); !ok {
+		return
+	}
 
 	res, err := h.service.UpdateActor(r.Context(), &req)
 	if err != nil {

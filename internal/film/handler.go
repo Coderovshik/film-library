@@ -47,7 +47,9 @@ func (h *Handler) GetFilms(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) AddFilm(w http.ResponseWriter, r *http.Request) {
 	var req AddFilmRequest
-	util.BindJSON(w, r, &req)
+	if ok := util.BindJSON(w, r, &req); !ok {
+		return
+	}
 
 	res, err := h.service.AddFilm(r.Context(), &req)
 	if err != nil {
@@ -107,7 +109,9 @@ func (h *Handler) GetFilm(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) UpdateFilm(w http.ResponseWriter, r *http.Request) {
 	var req FilmIdInfoRequest
-	util.BindJSON(w, r, &req.Info)
+	if ok := util.BindJSON(w, r, &req.Info); !ok {
+		return
+	}
 	req.ID = r.PathValue("id")
 
 	res, err := h.service.UpdateFilm(r.Context(), &req)
@@ -173,7 +177,7 @@ func (h *Handler) GetFilmActors(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("ERROR: failed to get film related actors err=%s\n", err.Error())
 
-		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrFilmNotExist) {
+		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrZeroActors) {
 			util.NotFound(w, r)
 			return
 		}
@@ -187,15 +191,25 @@ func (h *Handler) GetFilmActors(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) AddFilmActors(w http.ResponseWriter, r *http.Request) {
 	var req FilmActorsRequest
-	util.BindJSON(w, r, &req.ActorIDs)
+	if ok := util.BindJSON(w, r, &req.ActorIDs); !ok {
+		return
+	}
 	req.ID = r.PathValue("id")
 
 	res, err := h.service.AddFilmActors(r.Context(), &req)
 	if err != nil {
 		log.Printf("ERROR: failed to add film related actors err=%s\n", err.Error())
 
-		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrFilmNotExist) {
+		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrZeroActors) {
 			util.NotFound(w, r)
+			return
+		}
+
+		if errors.Is(err, ErrEmptyUpdate) {
+			util.JSON(w, r, http.StatusBadRequest, &util.ErrorMessage{
+				ErrorType: util.ErrorTypeValidation,
+				Body:      "no actors provided",
+			})
 			return
 		}
 
@@ -224,30 +238,24 @@ func (h *Handler) AddFilmActors(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) DeleteFilmActors(w http.ResponseWriter, r *http.Request) {
 	var req FilmActorsRequest
-	util.BindJSON(w, r, &req.ActorIDs)
+	if ok := util.BindJSON(w, r, &req.ActorIDs); !ok {
+		return
+	}
 	req.ID = r.PathValue("id")
 
 	res, err := h.service.DeleteFilmActors(r.Context(), &req)
 	if err != nil {
 		log.Printf("ERROR: failed to add film related actors err=%s\n", err.Error())
 
-		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrFilmNotExist) {
+		if errors.Is(err, ErrIdInvalid) || errors.Is(err, ErrZeroActors) {
 			util.NotFound(w, r)
 			return
 		}
 
-		if errors.Is(err, ErrFilmActorExist) {
+		if errors.Is(err, ErrEmptyUpdate) {
 			util.JSON(w, r, http.StatusBadRequest, &util.ErrorMessage{
-				ErrorType: util.ErrorTypeConflict,
-				Body:      "one of the provided actors is alreadey bound to the film",
-			})
-			return
-		}
-
-		if errors.Is(err, ErrActorNotExist) {
-			util.JSON(w, r, http.StatusBadRequest, &util.ErrorMessage{
-				ErrorType: util.ErrorTypeConflict,
-				Body:      "one of the provided actors is non-existent",
+				ErrorType: util.ErrorTypeValidation,
+				Body:      "no actors provided",
 			})
 			return
 		}

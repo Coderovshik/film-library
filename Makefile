@@ -15,3 +15,11 @@ compose-up:
 .PHONY: compose-down
 compose-down:
 	@docker compose down
+
+.PHONY: test
+test:
+	@go test -v ./...
+
+.PHONY: test-coverage
+test-coverage:
+	@go test -cover ./...

@@ -8,7 +8,6 @@ import (
 type QueryableObject struct {
 	keys   []string
 	values []any
-	count  int
 }
 
 func NewQueryableObject() *QueryableObject {

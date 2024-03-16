@@ -20,7 +20,9 @@ func NewHandler(s UserService) *Handler {
 
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var req CreateUserRequest
-	util.BindJSON(w, r, &req)
+	if ok := util.BindJSON(w, r, &req); !ok {
+		return
+	}
 
 	res, err := h.service.CreateUser(r.Context(), &req)
 	if err != nil {
@@ -52,7 +54,9 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
-	util.BindJSON(w, r, &req)
+	if ok := util.BindJSON(w, r, &req); !ok {
+		return
+	}
 
 	res, err := h.service.Login(r.Context(), &req)
 	if err != nil {
