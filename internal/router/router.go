@@ -25,10 +25,13 @@ func NewRouter(cfg *config.Config, uh user.UserHandler, ah actor.ActorHandler, f
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("pong"))
 	})
-	mux.HandleFunc("GET /docs", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
+
+	mux.HandleFunc("GET /docs/html", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		http.ServeFile(w, r, cfg.Docs)
+		http.ServeFile(w, r, cfg.DocsHTML)
+	})
+	mux.HandleFunc("GET /docs/yaml", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, cfg.DocsYAML)
 	})
 
 	mux.Handle("POST /signup", logMW(http.HandlerFunc(uh.CreateUser)))

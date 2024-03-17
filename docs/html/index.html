@@ -1050,8 +1050,11 @@ ul.nav-tabs {
                       <a href="#api-Users-signupPost">signupPost</a>
                     </li>
                   <li class="nav-header" data-group="Util"><a href="#api-Util">API Methods - Util</a></li>
-                    <li data-group="Util" data-name="docsGet" class="">
-                      <a href="#api-Util-docsGet">docsGet</a>
+                    <li data-group="Util" data-name="docsHtmlGet" class="">
+                      <a href="#api-Util-docsHtmlGet">docsHtmlGet</a>
+                    </li>
+                    <li data-group="Util" data-name="docsYamlGet" class="">
+                      <a href="#api-Util-docsYamlGet">docsYamlGet</a>
                     </li>
                     <li data-group="Util" data-name="pingGet" class="">
                       <a href="#api-Util-pingGet">pingGet</a>
@@ -8843,11 +8846,11 @@ $(document).ready(function() {
                   </section>
                 <section id="api-Util">
                   <h1>Util</h1>
-                    <div id="api-Util-docsGet">
-                      <article id="api-Util-docsGet-0" data-group="User" data-name="docsGet" data-version="0">
+                    <div id="api-Util-docsHtmlGet">
+                      <article id="api-Util-docsHtmlGet-0" data-group="User" data-name="docsHtmlGet" data-version="0">
                         <div class="pull-left">
-                          <h1>docsGet</h1>
-                          <p>openapi documentation</p>
+                          <h1>docsHtmlGet</h1>
+                          <p>openapi documentation (html)</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -8855,35 +8858,35 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/docs</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/docs/html</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Util-docsGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-dart">Dart</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Util-docsGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Util-docsGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Util-docsGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Util-docsGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-python">Python</a></li>
-                          <li class=""><a href="#examples-Util-docsGet-0-rust">Rust</a></li>
+                          <li class="active"><a href="#examples-Util-docsHtmlGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Util-docsHtmlGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Util-docsHtmlGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Util-docsHtmlGet-0-rust">Rust</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Util-docsGet-0-curl">
+                          <div class="tab-pane active" id="examples-Util-docsHtmlGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  \
  -H "Accept: text/html" \
- "http://localhost:8080/docs"
+ "http://localhost:8080/docs/html"
 </code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Util-docsGet-0-java">
+                          <div class="tab-pane" id="examples-Util-docsHtmlGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
 import org.openapitools.client.auth.*;
 import org.openapitools.client.model.*;
@@ -8906,10 +8909,10 @@ public class UtilApiExample {
         UtilApi apiInstance = new UtilApi();
 
         try {
-            File result = apiInstance.docsGet();
+            File result = apiInstance.docsHtmlGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling UtilApi#docsGet");
+            System.err.println("Exception when calling UtilApi#docsHtmlGet");
             e.printStackTrace();
         }
     }
@@ -8917,23 +8920,23 @@ public class UtilApiExample {
 </code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Util-docsGet-0-dart">
+                          <div class="tab-pane" id="examples-Util-docsHtmlGet-0-dart">
                             <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
 
 final api_instance = DefaultApi();
 
 
 try {
-    final result = await api_instance.docsGet();
+    final result = await api_instance.docsHtmlGet();
     print(result);
 } catch (e) {
-    print('Exception when calling DefaultApi->docsGet: $e\n');
+    print('Exception when calling DefaultApi->docsHtmlGet: $e\n');
 }
 
 </code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Util-docsGet-0-android">
+                          <div class="tab-pane" id="examples-Util-docsHtmlGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.UtilApi;
 
 public class UtilApiExample {
@@ -8941,20 +8944,20 @@ public class UtilApiExample {
         UtilApi apiInstance = new UtilApi();
 
         try {
-            File result = apiInstance.docsGet();
+            File result = apiInstance.docsHtmlGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling UtilApi#docsGet");
+            System.err.println("Exception when calling UtilApi#docsHtmlGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Util-docsGet-0-groovy">
+  <div class="tab-pane" id="examples-Util-docsHtmlGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Util-docsGet-0-objc">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
 
 // Configure API key authorization: (authentication scheme: cookieAuth)
@@ -8966,8 +8969,8 @@ public class UtilApiExample {
 // Create an instance of the API class
 UtilApi *apiInstance = [[UtilApi alloc] init];
 
-// openapi documentation
-[apiInstance docsGetWithCompletionHandler: 
+// openapi documentation (html)
+[apiInstance docsHtmlGetWithCompletionHandler: 
               ^(File output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
@@ -8979,7 +8982,7 @@ UtilApi *apiInstance = [[UtilApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Util-docsGet-0-javascript">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var FilmLibrary = require('film_library');
 var defaultClient = FilmLibrary.ApiClient.instance;
 
@@ -8998,14 +9001,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.docsGet(callback);
+api.docsHtmlGet(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Util-docsGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Util-docsHtmlGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Util-docsGet-0-csharp">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using Org.OpenAPITools.Api;
@@ -9014,7 +9017,7 @@ using Org.OpenAPITools.Model;
 
 namespace Example
 {
-    public class docsGetExample
+    public class docsHtmlGetExample
     {
         public void main()
         {
@@ -9027,11 +9030,11 @@ namespace Example
             var apiInstance = new UtilApi();
 
             try {
-                // openapi documentation
-                File result = apiInstance.docsGet();
+                // openapi documentation (html)
+                File result = apiInstance.docsHtmlGet();
                 Debug.WriteLine(result);
             } catch (Exception e) {
-                Debug.Print("Exception when calling UtilApi.docsGet: " + e.Message );
+                Debug.Print("Exception when calling UtilApi.docsHtmlGet: " + e.Message );
             }
         }
     }
@@ -9039,7 +9042,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Util-docsGet-0-php">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -9052,15 +9055,15 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('jwt', '
 $api_instance = new OpenAPITools\Client\Api\UtilApi();
 
 try {
-    $result = $api_instance->docsGet();
+    $result = $api_instance->docsHtmlGet();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling UtilApi->docsGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling UtilApi->docsHtmlGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Util-docsGet-0-perl">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::OPenAPIClient::Configuration;
 use WWW::OPenAPIClient::UtilApi;
@@ -9074,15 +9077,15 @@ $WWW::OPenAPIClient::Configuration::api_key->{'jwt'} = 'YOUR_API_KEY';
 my $api_instance = WWW::OPenAPIClient::UtilApi->new();
 
 eval {
-    my $result = $api_instance->docsGet();
+    my $result = $api_instance->docsHtmlGet();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling UtilApi->docsGet: $@\n";
+    warn "Exception when calling UtilApi->docsHtmlGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Util-docsGet-0-python">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import openapi_client
@@ -9098,20 +9101,20 @@ openapi_client.configuration.api_key['jwt'] = 'YOUR_API_KEY'
 api_instance = openapi_client.UtilApi()
 
 try:
-    # openapi documentation
-    api_response = api_instance.docs_get()
+    # openapi documentation (html)
+    api_response = api_instance.docs_html_get()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling UtilApi->docsGet: %s\n" % e)</code></pre>
+    print("Exception when calling UtilApi->docsHtmlGet: %s\n" % e)</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Util-docsGet-0-rust">
+                            <div class="tab-pane" id="examples-Util-docsHtmlGet-0-rust">
                               <pre class="prettyprint"><code class="language-rust">extern crate UtilApi;
 
 pub fn main() {
 
     let mut context = UtilApi::Context::default();
-    let result = client.docsGet(&context).wait();
+    let result = client.docsHtmlGet(&context).wait();
 
     println!("{:?}", result);
 }
@@ -9132,23 +9135,23 @@ pub fn main() {
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-Util-docsGet-title-200"></h3>
-                            <p id="examples-Util-docsGet-description-200" class="marked"></p>
+                            <h3 id="examples-Util-docsHtmlGet-title-200"></h3>
+                            <p id="examples-Util-docsHtmlGet-description-200" class="marked"></p>
                             <script>
                               var responseUtil200_description = `OK`;
                               var responseUtil200_description_break = responseUtil200_description.indexOf('\n');
                               if (responseUtil200_description_break == -1) {
-                                $("#examples-Util-docsGet-title-200").text("Status: 200 - " + responseUtil200_description);
+                                $("#examples-Util-docsHtmlGet-title-200").text("Status: 200 - " + responseUtil200_description);
                               } else {
-                                $("#examples-Util-docsGet-title-200").text("Status: 200 - " + responseUtil200_description.substring(0, responseUtil200_description_break));
-                                $("#examples-Util-docsGet-description-200").html(responseUtil200_description.substring(responseUtil200_description_break));
+                                $("#examples-Util-docsHtmlGet-title-200").text("Status: 200 - " + responseUtil200_description.substring(0, responseUtil200_description_break));
+                                $("#examples-Util-docsHtmlGet-description-200").html(responseUtil200_description.substring(responseUtil200_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-Util-docsGet-200" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-Util-docsHtmlGet-200" class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-Util-docsGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-Util-docsHtmlGet-200-schema">Schema</a>
                                 </li>
 
 
@@ -9157,9 +9160,9 @@ pub fn main() {
                             </ul>
 
 
-                            <div class="tab-content" id="responses-Util-docsGet-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Util-docsGet-200-schema">
-                                  <div id="responses-Util-docsGet-schema-200" class="exampleStyle">
+                            <div class="tab-content" id="responses-Util-docsHtmlGet-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Util-docsHtmlGet-200-schema">
+                                  <div id="responses-Util-docsHtmlGet-schema-200" class="exampleStyle">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = ;
@@ -9184,14 +9187,368 @@ pub fn main() {
                                         }
 
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-Util-docsGet-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-Util-docsGet-schema-200');
+                                        $('#responses-Util-docsHtmlGet-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Util-docsHtmlGet-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-Util-docsGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-Util-docsHtmlGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Util-docsYamlGet">
+                      <article id="api-Util-docsYamlGet-0" data-group="User" data-name="docsYamlGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>docsYamlGet</h1>
+                          <p>openapi documentation (yaml)</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/docs/yaml</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Util-docsYamlGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Util-docsYamlGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Util-docsYamlGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Util-docsYamlGet-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Util-docsYamlGet-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ \
+ -H "Accept: text/plain" \
+ "http://localhost:8080/docs/yaml"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Util-docsYamlGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.UtilApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UtilApiExample {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        // Configure API key authorization: cookieAuth
+        ApiKeyAuth cookieAuth = (ApiKeyAuth) defaultClient.getAuthentication("cookieAuth");
+        cookieAuth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //cookieAuth.setApiKeyPrefix("Token");
+
+        // Create an instance of the API class
+        UtilApi apiInstance = new UtilApi();
+
+        try {
+            File result = apiInstance.docsYamlGet();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UtilApi#docsYamlGet");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Util-docsYamlGet-0-dart">
+                            <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
+
+final api_instance = DefaultApi();
+
+
+try {
+    final result = await api_instance.docsYamlGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling DefaultApi->docsYamlGet: $e\n');
+}
+
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Util-docsYamlGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.UtilApi;
+
+public class UtilApiExample {
+    public static void main(String[] args) {
+        UtilApi apiInstance = new UtilApi();
+
+        try {
+            File result = apiInstance.docsYamlGet();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UtilApi#docsYamlGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Util-docsYamlGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: cookieAuth)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"jwt"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"jwt"];
+
+
+// Create an instance of the API class
+UtilApi *apiInstance = [[UtilApi alloc] init];
+
+// openapi documentation (yaml)
+[apiInstance docsYamlGetWithCompletionHandler: 
+              ^(File output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var FilmLibrary = require('film_library');
+var defaultClient = FilmLibrary.ApiClient.instance;
+
+// Configure API key authorization: cookieAuth
+var cookieAuth = defaultClient.authentications['cookieAuth'];
+cookieAuth.apiKey = "YOUR API KEY";
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//cookieAuth.apiKeyPrefix['jwt'] = "Token";
+
+// Create an instance of the API class
+var api = new FilmLibrary.UtilApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.docsYamlGet(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Util-docsYamlGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class docsYamlGetExample
+    {
+        public void main()
+        {
+            // Configure API key authorization: cookieAuth
+            Configuration.Default.ApiKey.Add("jwt", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("jwt", "Bearer");
+
+            // Create an instance of the API class
+            var apiInstance = new UtilApi();
+
+            try {
+                // openapi documentation (yaml)
+                File result = apiInstance.docsYamlGet();
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling UtilApi.docsYamlGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: cookieAuth
+OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('jwt', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('jwt', 'Bearer');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\UtilApi();
+
+try {
+    $result = $api_instance->docsYamlGet();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UtilApi->docsYamlGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::UtilApi;
+
+# Configure API key authorization: cookieAuth
+$WWW::OPenAPIClient::Configuration::api_key->{'jwt'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::OPenAPIClient::Configuration::api_key_prefix->{'jwt'} = "Bearer";
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::UtilApi->new();
+
+eval {
+    my $result = $api_instance->docsYamlGet();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling UtilApi->docsYamlGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: cookieAuth
+openapi_client.configuration.api_key['jwt'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# openapi_client.configuration.api_key_prefix['jwt'] = 'Bearer'
+
+# Create an instance of the API class
+api_instance = openapi_client.UtilApi()
+
+try:
+    # openapi documentation (yaml)
+    api_response = api_instance.docs_yaml_get()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling UtilApi->docsYamlGet: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Util-docsYamlGet-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate UtilApi;
+
+pub fn main() {
+
+    let mut context = UtilApi::Context::default();
+    let result = client.docsYamlGet(&context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Util-docsYamlGet-title-200"></h3>
+                            <p id="examples-Util-docsYamlGet-description-200" class="marked"></p>
+                            <script>
+                              var responseUtil200_description = `OK`;
+                              var responseUtil200_description_break = responseUtil200_description.indexOf('\n');
+                              if (responseUtil200_description_break == -1) {
+                                $("#examples-Util-docsYamlGet-title-200").text("Status: 200 - " + responseUtil200_description);
+                              } else {
+                                $("#examples-Util-docsYamlGet-title-200").text("Status: 200 - " + responseUtil200_description.substring(0, responseUtil200_description_break));
+                                $("#examples-Util-docsYamlGet-description-200").html(responseUtil200_description.substring(responseUtil200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Util-docsYamlGet-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Util-docsYamlGet-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Util-docsYamlGet-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Util-docsYamlGet-200-schema">
+                                  <div id="responses-Util-docsYamlGet-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Util-docsYamlGet-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Util-docsYamlGet-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Util-docsYamlGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>

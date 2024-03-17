@@ -36,16 +36,29 @@ paths:
               schema:
                 type: string
                 enum: [pong]
-  /docs:
+  /docs/html:
     get:
       tags:
         - util
-      summary: openapi documentation
+      summary: openapi documentation (html)
       responses:
         '200':
           description: OK
           content:
             text/html:
+              schema:
+                type: string
+                format: binary
+  /docs/yaml:
+    get:
+      tags:
+        - util
+      summary: openapi documentation (yaml)
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
               schema:
                 type: string
                 format: binary
