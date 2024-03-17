@@ -10,15 +10,15 @@ compose-rm:
 
 .PHONY: compose-up
 compose-up:
-	@docker compose up
+	@docker compose --env-file config/.env up
 
 .PHONY: compose-build-up
 compose-build-up:
-	@docker compose up --build
+	@docker compose --env-file config/.env up --build
 
 .PHONY: compose-down
 compose-down:
-	@docker compose down
+	@docker compose --env-file config/.env down
 
 .PHONY: test
 test:
@@ -47,3 +47,15 @@ rm-mock:
 	@rm -rf internal/user/mock.go
 	@rm -rf internal/actor/mock.go
 	@rm -rf internal/film/mock.go
+
+.PHONY: gen-docs-html
+gen-docs-html:
+	@docker run --rm \
+  		-v ${PWD}:/local openapitools/openapi-generator-cli generate \
+  		-i /local/api/openapi.yaml \
+  		-g html2 \
+  		-o /local/docs/html
+
+.PHONY: rm-docs-html
+rm-docs-html:
+	@rm -rf docs/html

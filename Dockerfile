@@ -20,6 +20,4 @@ FROM alpine AS runner
 COPY --from=builder /usr/local/src/bin/app /
 COPY --from=builder /usr/local/src/bin/migrator /
 
-EXPOSE 8080
-
 CMD ["ash", "-c", "/migrator;/app"]

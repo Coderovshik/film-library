@@ -21,13 +21,14 @@ func NewRouter(cfg *config.Config, uh user.UserHandler, ah actor.ActorHandler, f
 	adminOnlyMW := middleware.NewAuthMiddleware(cfg.SigningKey, true)
 	logMW := middleware.NewLogMiddleware()
 
-	mux.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /ping", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("pong"))
 	})
 
 	mux.Handle("POST /signup", logMW(http.HandlerFunc(uh.CreateUser)))
 	mux.Handle("POST /signin", logMW(http.HandlerFunc(uh.Login)))
+	mux.Handle("DELETE /signout", logMW(http.HandlerFunc(uh.Logout)))
 
 	mux.Handle("GET /actors", logMW(authMW(http.HandlerFunc(ah.GetActors))))
 	mux.Handle("POST /actors", logMW(adminOnlyMW(http.HandlerFunc(ah.AddActor))))

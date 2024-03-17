@@ -77,3 +77,20 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	util.SetJWTCookie(w, res.AccessToken)
 	util.OK(w, r)
 }
+
+func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
+	_, err := r.Cookie("jwt")
+	if err != nil {
+		log.Printf("ERROR: logout failed err=%s", err.Error())
+		if errors.Is(err, http.ErrNoCookie) {
+			util.Unauthorized(w, r)
+			return
+		}
+
+		util.InternalServerError(w, r)
+		return
+	}
+
+	util.UnsetJWTCookie(w)
+	util.OK(w, r)
+}

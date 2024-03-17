@@ -9,10 +9,12 @@ info:
     - [The Film library repository](https://github.com/Coderovshik/film-library)
     - [The source API definition for the Film library](https://github.com/Coderovshik/film-library/blob/master/api/openapi.yml)
 servers:
-  - url: https://localhost:8080
+  - url: localhost:8080
 security:
   - cookieAuth: []
 tags:
+  - name: util
+    description: Useful functionalty not related to films and actors
   - name: actors
     description: Everything about actors
   - name: films
@@ -21,6 +23,32 @@ tags:
     description: Authentication
 
 paths:
+  /ping:
+    get:
+      tags:
+        - util
+      summary: ping server
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum: [pong]
+  /docs:
+    get:
+      tags:
+        - util
+      summary: openapi documentation
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
   /actors:
     get:
       tags:
@@ -389,6 +417,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/errorMessage"
       security: []
+  /signout:
+    delete:
+      tags:
+        - users
+      summary: sign out
+      responses:
+        '200':
+          description: OK
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: jwt=...; Path=/; HttpOnly
+        '401':
+          description: Unauthorized
   
 
 components:
