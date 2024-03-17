@@ -10,7 +10,7 @@ make compose-build-up
 
 ### Документация
 
-Документация расположена по пути [`api/openapi.yml`](https://github.com/Coderovshik/film-library/blob/master/api/openapi.yml). Для просмотра можно использовать [Swagger Editor](https://editor.swagger.io/).
+Документация OpenAPI в формате html-документа доступан по адресу [localhost:8080/docs](localhost:8080/docs). Если вас интересует yaml-файл, его можно найти в репозитории по пути `api/openapi.yaml`.
 
 ### Тесты
 
@@ -27,4 +27,4 @@ make test-docker
 - **Поиск фильмов:** Сортировка и фильтрация осуществляется с пмомщью query-параметров
 - **Администратор:** Логин - admin_user, пароль - admin_password
 - **Данные:** По умолчанию в базу данных загружен небольшой объем mock-данных (за подробностями обращайтесь к [файлам миграций](https://github.com/Coderovshik/film-library/tree/master/internal/db/migrations))
-- **Сервер:** По умолчанию сервер запускается по адресу `localhost:8080`. (Можно поменять в )
+- **Сервер:** По умолчанию сервер доступен по адресу [localhost:8080](localhost:8080). (Порт можно поменять в `config/.env`)

@@ -12,6 +12,7 @@ type Config struct {
 	Port        string `env:"SERVER_PORT" env-default:"8080"`
 	SigningKey  string `env:"SIGNING_KEY" env-required:"true"`
 	DatabaseURI string `env:"DATABASE_URI" env-required:"true"`
+	Docs        string `env:"DOCS" env-required:"true"`
 }
 
 func (c *Config) Addr() string {

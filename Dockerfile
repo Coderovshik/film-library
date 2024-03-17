@@ -17,6 +17,7 @@ RUN go test -cover ./...
 
 FROM alpine AS runner
 
+COPY docs/html/index.html /
 COPY --from=builder /usr/local/src/bin/app /
 COPY --from=builder /usr/local/src/bin/migrator /
 
